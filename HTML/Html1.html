@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5ddd5;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #075e54;
+            color: #fff;
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            margin: 10px 0;
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .message.sent {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            text-align: right;
+        }
+        .message.received {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            align-self: flex-start;
+            text-align: left;
+        }
+        .input-box {
+            display: flex;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-top: 1px solid #ccc;
+        }
+        .input-box input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+        }
+        .input-box button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #075e54;
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .input-box button:hover {
+            background-color: #128c7e;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">WhatsApp Chat</div>
+        <div class="chat-box" id="chatBox">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="input-box">
+            <input type="text" id="messageInput" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const chatBox = document.getElementById('chatBox');
+            const messageInput = document.getElementById('messageInput');
+
+            const messageText = messageInput.value.trim();
+            if (messageText) {
+                // Create sender's message
+                const senderMessage = document.createElement('div');
+                senderMessage.className = 'message sent';
+                senderMessage.textContent = messageText;
+                chatBox.appendChild(senderMessage);
+
+                // Scroll to the bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // Clear the input field
+                messageInput.value = '';
+
+                // Generate AI-based response after a short delay
+                setTimeout(() => {
+                    const receiverMessage = document.createElement('div');
+                    receiverMessage.className = 'message received';
+                    receiverMessage.textContent = generateAIResponse(messageText);
+                    chatBox.appendChild(receiverMessage);
+
+                    // Scroll to the bottom
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function generateAIResponse(inputText) {
+            // Basic AI response logic (can be replaced with more advanced logic)
+            const responses = [
+                "Interesting! Tell me more.",
+                "I see, what else?",
+                "That's great to hear!",
+                "Can you explain a bit more?",
+                "I'm here to listen!",
+                "Sounds good, let's discuss further!"
+            ];
+
+            // Return a random response for now
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+    </script>
+</body>
+</html>
